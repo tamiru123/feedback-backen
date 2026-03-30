@@ -1,16 +1,24 @@
-import { CreateFeedbackRequest, UpdateFeedbackRequest, FeedbackStats } from '../types';
+import Feedback from '../models/Feedback';
 export declare class FeedbackService {
-    private feedbackRepo;
-    constructor();
-    createFeedback(data: CreateFeedbackRequest & {
-        ipAddress: string;
-        userAgent: string;
-        userId?: number;
-    }): Promise<import("../models/Feedback").default>;
-    getAllFeedbacks(limit?: number, offset?: number): Promise<import("../models/Feedback").default[]>;
-    getFeedbackById(id: number): Promise<import("../models/Feedback").default>;
-    updateFeedback(id: number, updateData: UpdateFeedbackRequest): Promise<import("../models/Feedback").default>;
-    deleteFeedback(id: number): Promise<void>;
-    getStats(): Promise<FeedbackStats>;
+    createFeedback(data: any): Promise<Feedback>;
+    getAllFeedback(): Promise<Feedback[]>;
+    getFeedbackById(id: number): Promise<Feedback | null>;
+    getFeedbackStats(): Promise<{
+        total: number;
+        averageRating: number;
+        recentFeedback: number;
+        ratingDistribution: {
+            rating: any;
+            count: number;
+        }[];
+        wordRatingDistribution: {
+            wordRating: any;
+            count: number;
+        }[];
+        topicCounts: Record<string, number>;
+        questionStats: any;
+    }>;
+    updateFeedback(id: number, data: any): Promise<Feedback>;
+    deleteFeedback(id: number): Promise<boolean>;
 }
 //# sourceMappingURL=FeedbackService.d.ts.map

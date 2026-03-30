@@ -11,7 +11,7 @@ dotenv_1.default.config();
 let redis = null;
 try {
     redis = new ioredis_1.default({
-        host: process.env.REDIS_HOST || 'localhost',
+        host: process.env.REDIS_HOST || '192.168.8.10',
         port: parseInt(process.env.REDIS_PORT || '6379'),
         password: process.env.REDIS_PASSWORD || undefined,
         retryStrategy: (times) => {

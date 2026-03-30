@@ -1,5 +1,16 @@
 import { Model, Optional } from 'sequelize';
-import { FeedbackAttributes } from '../types';
+interface FeedbackAttributes {
+    id: number;
+    rating: number;
+    wordRating: string;
+    topics: string[];
+    answers: any;
+    ipAddress: string | null;
+    userAgent: string | null;
+    userId: number | null;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
 interface FeedbackCreationAttributes extends Optional<FeedbackAttributes, 'id' | 'ipAddress' | 'userAgent' | 'userId'> {
 }
 declare class Feedback extends Model<FeedbackAttributes, FeedbackCreationAttributes> implements FeedbackAttributes {
@@ -7,6 +18,7 @@ declare class Feedback extends Model<FeedbackAttributes, FeedbackCreationAttribu
     rating: number;
     wordRating: string;
     topics: string[];
+    answers: any;
     ipAddress: string | null;
     userAgent: string | null;
     userId: number | null;

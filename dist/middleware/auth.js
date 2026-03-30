@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.requireAdmin = exports.authenticate = void 0;
-const AuthService_1 = require("../services/AuthService");
-const authService = new AuthService_1.AuthService();
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const environment_1 = require("../config/environment");
 const authenticate = async (req, res, next) => {
     try {
         const token = req.headers.authorization?.split(' ')[1];
@@ -10,12 +13,16 @@ const authenticate = async (req, res, next) => {
             res.status(401).json({ error: 'No token provided' });
             return;
         }
-        const decoded = await authService.verifyToken(token);
-        req.user = decoded;
+        const decoded = jsonwebtoken_1.default.verify(token, environment_1.config.JWT_SECRET);
+        req.user = {
+            id: decoded.id,
+            username: decoded.username,
+            role: decoded.role
+        };
         next();
     }
     catch (error) {
-        res.status(401).json({ error: error.message });
+        res.status(401).json({ error: 'Invalid or expired token' });
     }
 };
 exports.authenticate = authenticate;

@@ -24,6 +24,11 @@ Feedback.init({
         allowNull: false,
         defaultValue: []
     },
+    answers: {
+        type: sequelize_1.DataTypes.JSONB,
+        allowNull: true,
+        defaultValue: {}
+    },
     ipAddress: {
         type: sequelize_1.DataTypes.STRING(45),
         allowNull: true
