@@ -5,7 +5,7 @@ import { config } from './config/environment';
 import authRoutes from './routes/authRoutes';
 import feedbackRoutes from './routes/feedbackRoutes';
 import sectorRoutes from './routes/sectorRoutes';
-import questionRoutes from './routes/questionRoutes'; // ✅ ADD THIS IMPORT
+import questionRoutes from './routes/questionRoutes';
 import { AuthService } from './services/AuthService';
 
 const app = express();
@@ -27,9 +27,9 @@ const getLocalIp = () => {
 
 const localIp = getLocalIp();
 
-// CORS - Allow all origins
+// CORS - Allow your frontend
 app.use(cors({
-  origin: '*',
+  origin: config.CORS_ORIGIN,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -43,12 +43,12 @@ app.get('/health', (req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString(), ip: localIp });
 });
 
-// Routes - Make sure all routes are registered
+// Routes
 console.log('📡 Registering routes...');
 app.use('/api/auth', authRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/sectors', sectorRoutes);
-app.use('/api/questions', questionRoutes); // ✅ ADD THIS LINE
+app.use('/api/questions', questionRoutes);
 console.log('✅ Routes registered: /api/auth, /api/feedback, /api/sectors, /api/questions');
 
 // 404 handler
@@ -80,10 +80,10 @@ const startServer = async (): Promise<void> => {
     console.log(`   GET    /api/feedback - Get all feedbacks (admin)`);
     console.log(`   GET    /api/sectors - Get sectors`);
     console.log(`   GET    /api/sectors/:id/questions - Get questions by sector`);
-    console.log(`   GET    /api/questions - Get all questions (admin)`); // ✅ ADDED
-    console.log(`   GET    /api/questions/sector/:sectorId - Get questions by sector`); // ✅ ADDED
-    console.log(`   PUT    /api/questions/:id - Update question (admin)`); // ✅ ADDED
-    console.log(`   DELETE /api/questions/:id - Delete question (admin)`); // ✅ ADDED
+    console.log(`   GET    /api/questions - Get all questions (admin)`);
+    console.log(`   GET    /api/questions/sector/:sectorId - Get questions by sector`);
+    console.log(`   PUT    /api/questions/:id - Update question (admin)`);
+    console.log(`   DELETE /api/questions/:id - Delete question (admin)`);
   });
 };
 
