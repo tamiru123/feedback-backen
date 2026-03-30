@@ -7,7 +7,6 @@ console.log(`DB_PORT: ${config.DB_PORT}`);
 console.log(`DB_NAME: ${config.DB_NAME}`);
 console.log(`DB_USER: ${config.DB_USER}`);
 console.log(`NODE_ENV: ${config.NODE_ENV}`);
-// Password is intentionally not logged
 
 export const sequelize = new Sequelize(
   config.DB_NAME,
@@ -38,8 +37,6 @@ export const connectDatabase = async (): Promise<void> => {
     console.log('🔄 Attempting database connection...');
     await sequelize.authenticate();
     console.log(`✅ Database connected successfully to ${config.DB_NAME}`);
-    
-    // Sync models (creates tables if they don't exist)
     await sequelize.sync({ alter: true });
     console.log('✅ Database tables synced');
   } catch (error) {
