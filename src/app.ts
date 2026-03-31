@@ -20,16 +20,16 @@ const getLocalIp = () => {
       if (iface.family === 'IPv4' && !iface.internal) {
         return iface.address;
       }
-    }
+  }
   }
   return 'localhost';
 };
 
 const localIp = getLocalIp();
 
-// CORS - Allow your frontend
+// ✅ HARDCODED CORS - Allow all origins for testing
 app.use(cors({
-  origin: config.CORS_ORIGIN,
+  origin: '*',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -84,6 +84,7 @@ const startServer = async (): Promise<void> => {
     console.log(`   GET    /api/questions/sector/:sectorId - Get questions by sector`);
     console.log(`   PUT    /api/questions/:id - Update question (admin)`);
     console.log(`   DELETE /api/questions/:id - Delete question (admin)`);
+    console.log(`\n🌐 CORS enabled for all origins`);
   });
 };
 
